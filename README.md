@@ -1,2 +1,2 @@
 # small-projects
-Miscellaneous small scripts
+Miscellaneous small scripts.
