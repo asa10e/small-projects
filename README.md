@@ -1,2 +1,2 @@
 # small-projects
-Miscellaneous scripts that do fun things
+Miscellaneous small scripts
