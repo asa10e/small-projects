@@ -11,16 +11,17 @@ def find_top_song():
     """
     Grabs the title and artist of the top song on the Billboard Hot 100.
     """
-    billboard_site = "https://www.billboard.com/charts/hot-100"
+    billboard_site = 'https://www.billboard.com/charts/hot-100'
     html = requests.get(billboard_site).text
     soup = BeautifulSoup(html, 'html.parser')
-    all_songs = soup.find("div", {"class": "chart-list chart-details__left-rail"})
 
-    text_before_song = """<div class="chart-list chart-details__left-rail" data-video-playlist="[{&quot;id&quot;:&quot;6017857746001&quot;,&quot;rank&quot;:1,&quot;title&quot;:&quot;"""
-    text_after_song = "&quot;"
-    song = (str(all_songs).split(text_before_song))[1].split(text_after_song)[0] # Text between text_before_song and text_after_song
+    div = soup.find('div', {'class': 'chart-list-item', 'data-rank':'1'})
+    artist = div['data-artist']
+    song_title = div['data-title']
 
-    return song
+    combined_data = artist + ' ' + song_title # What we'll search YouTube for
+
+    return combined_data
 
 
 def text_to_video(text):
@@ -29,7 +30,7 @@ def text_to_video(text):
     of the first resulting video.
     """
     query = urllib.parse.quote(text) # "hello world" -> "hello%20world", etc.
-    url = "https://www.youtube.com/results?search_query=" + query
+    url = 'https://www.youtube.com/results?search_query=' + query
     html = urllib.request.urlopen(url).read()
     soup = BeautifulSoup(html, 'html.parser')
 
